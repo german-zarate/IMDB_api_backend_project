@@ -4,10 +4,19 @@ from django.core.exceptions import ValidationError
 
 
 
+class Review_serializer(serializers.ModelSerializer):
+    # watchlist = WatchList_serializer(many=True,read_only = True)
+    class Meta:
+        model = Review
+        exclude = ['watchlist',]
+        #fields = "__all__"
+
+
 
 class WatchList_serializer(serializers.ModelSerializer):
     len_name = serializers.SerializerMethodField()
-    
+    reviews = Review_serializer(many=True,read_only=True)
+
 
     class Meta:
         model = WatchList
@@ -39,3 +48,7 @@ class StreamPlatform_serializer(serializers.ModelSerializer):
     class Meta:
         model = StreamPlatform
         fields = "__all__"
+
+
+
+

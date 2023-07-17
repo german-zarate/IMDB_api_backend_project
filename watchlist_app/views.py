@@ -5,8 +5,85 @@ from .models import *
 from .serializers import *
 from rest_framework import status
 from django.http import HttpResponse
+from rest_framework import mixins
+from rest_framework import generics
+from .permissions import AdminOrReadOnly
+from rest_framework.authentication import BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
+class ReviewCreate(generics.CreateAPIView):
+    #queryset = Review.objects.all()
+    serializer_class = Review_serializer
+
+    def perform_create(self,serializer):
+        pk = self.kwargs['pk']
+        watchlist = WatchList.objects.get(pk=pk)
+
+        review_user = self.request.user
+        review_queryset = Review.objects.filter(watchlist=watchlist,review_user=review_user)
+
+        if review_queryset.exists():
+            raise ValidationError("yuo have already review this movie")
+        
+        if watchlist.number_rating == 0:
+            watchlist.avg_rating = serializer.validated_data['rating']
+        else:
+            watchlist.avg_rating = (watchlist.avg_rating + serializer.validated_data['rating'])/2
+
+        watchlist.number_rating = watchlist.number_rating + 1
+        watchlist.save()
+
+        serializer.save(watchlist=watchlist,review_user=review_user  )
+     
+
+
+
+
+class ReviewList(generics.ListCreateAPIView):
+    #queryset = Review.objects.all()
+    serializer_class = Review_serializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchlist=pk)
+
+
+
+
+class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = Review_serializer
+
+    permission_classes = [AdminOrReadOnly]
+
+
+
+
+
+
+# class ReviewList(mixins.ListModelMixin,
+#                   mixins.CreateModelMixin,
+#                   generics.GenericAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = Review_serializer
+
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+
+
+
+
+# class ReviewDetails(mixins.RetrieveModelMixin,generics.GenericAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = Review_serializer
+
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
 
 
 class StreamPlatformAV(APIView):
@@ -36,7 +113,7 @@ class StreamPlatform_Detail(APIView):
         except StreamPlatform.DoesNotExist:
             return Response({'error': 'not found'},status=404)
         
-        serializers = StreamPlatform_serializer(platform)
+        serializers = StreamPlatform_serializer(platform,context={'request':request})
         return Response(serializers.data)
     
     def put(self,request,pk):
@@ -107,6 +184,24 @@ class Watch_Detail(APIView):
         return HttpResponse(status=status.HTTP_302_FOUND)
 
 
+
+
+# class ReviewsAV(APIView):
+
+
+#     def get(self,request):
+#         platform = Review.objects.all()
+#         serializers = Review_serializer(platform,many=True,context={'request':request})
+#         return Response(serializers.data,status=status.HTTP_200_OK)
+    
+#     def post(self,request):
+#         data = request.data
+#         serializer = Review_serializer(data=data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data,status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serializer.errors)
 
 
 # @api_view(['GET','POST'])
