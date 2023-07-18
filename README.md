@@ -6,49 +6,42 @@ This repository contains a Django-based backend project that serves as a RESTful
 To run this project locally, follow these steps:
 
 # 1. Clone the repository to your local machine using the following command:
-shell
-Copy code
+
 ```bash
 git clone https://github.com/your-username/imdb-django-backend.git
 ```
 
 
 # 2. Change into the project directory:
-shell
-Copy code
+
 ```bash
 cd imdb-django-backend
 ```
 
 # 3 Create a virtual environment to isolate the project dependencies:
-shell
-Copy code
+
 ```bash
 python3 -m venv env
 ```
 # 4. Activate the virtual environment:
-shell
-Copy code
+
 ```bash
 source env/bin/activate
 ```
 # 5. Install the project dependencies:
-shell
-Copy code
+
 ```bash
 pip install -r requirements.txt
 ```
 # 6. Perform the initial database migration:
-shell
-Copy code
+
 
 ```bash
 python manage.py migrate
 ```
 
 # 7. Start the development server:
-shell
-Copy code
+
 
 ```bash
 python manage.py runserver
