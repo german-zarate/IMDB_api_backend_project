@@ -1,6 +1,6 @@
 # IMDB_api_backend_project
 
-This repository contains a Django-based backend project that serves as a RESTful API for an IMDb-like application. It leverages the Django Rest Framework (DRF) to provide a range of API endpoints for managing movies, actors, directors, and other related entities.
+This repository contains a Django-based backend project that serves as a RESTful API for an IMDb-like application. It leverages the Django Rest Framework (DRF) to provide a range of API endpoints.
 
 # Installation
 To run this project locally, follow these steps:
