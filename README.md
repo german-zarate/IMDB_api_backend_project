@@ -38,11 +38,11 @@ The development server will be up and running at http://localhost:8000/. You can
 The following API endpoints are available in this project:
 
 # Movies
-GET /watch/list: Retrieve a list of all movies.
-POST /watch/list: Create a new movie.
-GET /watch/list/{id}: Retrieve details of a specific movie.
-PUT /watch/list/{id}: Update details of a specific movie.
-DELETE /watch/list/{id}: Delete a specific movie.
+* GET /watch/list: Retrieve a list of all movies.
+* POST /watch/list: Create a new movie.
+* GET /watch/list/{id}: Retrieve details of a specific movie.
+* PUT /watch/list/{id}: Update details of a specific movie.
+* DELETE /watch/list/{id}: Delete a specific movie.
 # Stream Platforms
 GET /watch/stream: Retrieve a list of all stream platforms.
 POST /watch/stream: add a new platform.
