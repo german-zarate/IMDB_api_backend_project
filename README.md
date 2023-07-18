@@ -44,14 +44,14 @@ The following API endpoints are available in this project:
 * PUT /watch/list/{id}: Update details of a specific movie.
 * DELETE /watch/list/{id}: Delete a specific movie.
 # Stream Platforms
-GET /watch/stream: Retrieve a list of all stream platforms.
-POST /watch/stream: add a new platform.
-GET /watch/stream/{id}/: Retrieve details of a specific streaming platform.
-PUT /watch/stream{id}/: Update details of a specific streaming platform.
-DELETE /watch/stream/{id}/: Delete a specific streaming platform.
+* GET /watch/stream: Retrieve a list of all stream platforms.
+* POST /watch/stream: add a new platform.
+* GET /watch/stream/{id}/: Retrieve details of a specific streaming platform.
+* PUT /watch/stream{id}/: Update details of a specific streaming platform.
+* DELETE /watch/stream/{id}/: Delete a specific streaming platform.
 # Reviews
-GET /watch/stream/review/{id}/: Retrieve review of a specific moview.
-POST /watch/stream/{id}/review-create: create a review for specifcic movie.
+* GET /watch/stream/review/{id}/: Retrieve review of a specific moview.
+* POST /watch/stream/{id}/review-create: create a review for specifcic movie.
 Authentication and Permissions
 By default, the API endpoints are set to require authentication. You need to obtain an access token to access the protected endpoints. You can obtain an access token by sending a POST request to /api/token/, providing your username and password.
 
